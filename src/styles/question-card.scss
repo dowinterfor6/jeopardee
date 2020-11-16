@@ -1,0 +1,23 @@
+.question-card {
+  // TODO: SCSS variable, should be same as game-round
+  height: 75px;
+  width: 100%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+  cursor: pointer;
+  user-select: none;
+
+  .detail {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-score {
+    font-size: 36px;
+  }
+}

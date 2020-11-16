@@ -1,0 +1,19 @@
+@import './app.scss';
+@import './game-round.scss';
+@import './question-card.scss';
+@import './game.scss';
+@import './answer-button.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+}
+
+main {
+  height: 100%;
+}

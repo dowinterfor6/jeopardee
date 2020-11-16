@@ -1,0 +1,62 @@
+.game-round-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  .top-bar {
+    padding: 10px 20px;
+
+    .top {
+      margin-bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .round-header {
+      font-size: 52px;
+      font-weight: bold;
+    }
+
+    .dev {
+      position: absolute;
+      right: 20px;
+      transform: translateY(-25px);
+    }
+  }
+
+  .content {
+    .question-board-container {
+      margin: 20px;
+      display: grid;
+      // TODO: make this more robust
+      grid-template-columns: repeat(6, 150px);
+      grid-gap: 10px;
+      justify-content: center;
+  
+      .category-container {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-align: center;
+  
+        li {
+          padding: 10px;
+        }
+  
+        .category-header {
+          font-weight: bold;
+          font-size: 28px;
+        }
+      }
+    }
+  }
+
+  .bottom-bar {
+    // TODO: Same as top-bar
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
