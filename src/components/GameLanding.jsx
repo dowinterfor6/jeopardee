@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-const GameLanding = () => {
+const GameLanding = ({ setRound }) => {
   // TODO: Check valid name before navigating
-  const { roomId } = useParams();
+  // const { roomId } = useParams();
 
   return (
     <section className="game-landing-container">
@@ -11,9 +11,14 @@ const GameLanding = () => {
         Enter a name!
         <input type="text"/>
       </label>
-      <Link className="game-button" to={`/room/${roomId}/round/1`}>
+      {/* <Link className="game-button" to={`/room/${roomId}/round/1`}> */}
+      <button
+        className="game-button"
+        onClick={() => setRound(1)}
+      >
         Start the game!
-      </Link>
+      </button>
+      {/* </Link> */}
     </section>
   )
 }

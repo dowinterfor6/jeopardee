@@ -40,11 +40,14 @@
         padding: 0;
         list-style: none;
         text-align: center;
-  
-        li {
-          padding: 10px;
+        display: grid;
+        grid-gap: 10px;
+        
+        .card {
+          height: 75px;
+          width: 150px;
         }
-  
+        
         .category-header {
           font-weight: bold;
           font-size: 28px;

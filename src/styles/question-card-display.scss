@@ -1,0 +1,12 @@
+.question-card-display {
+  position: absolute;
+  height: 75px;
+  width: 150px;
+  transform: translateY(-75px);
+  display: none;
+  cursor: auto;
+  
+  &.flipped {
+    display: flex;
+  }
+}

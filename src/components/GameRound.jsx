@@ -1,12 +1,26 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import tempData from '../temp-backend';
 import { shuffle } from 'lodash';
 import QuestionCard from './QuestionCard';
 import TimeRemaining from './TimeRemaining';
 import AnswerButton from './AnswerButton';
 
-const GameRound = ({ state, dispatch, RESET_TIMER, START_TIMER }) => {
+const GameRound = ({
+  state,
+  dispatch,
+  RESET_TIMER,
+  START_TIMER,
+  SET_ANSWERABLE,
+  ADD_SCORE,
+  setRound,
+  setDisplayQuestion
+}) => {
+  const [questionBoardComponent, setQuestionBoardComponent] = useState();
+
+  // TODO: Track used questions to not repeat for round 2
+  // or just integrate it part of api
+
+  // TODO: Round 4 = results, and offer option to reset to round 0
   const resetTimer = () => dispatch({
     type: RESET_TIMER
   });
@@ -18,77 +32,119 @@ const GameRound = ({ state, dispatch, RESET_TIMER, START_TIMER }) => {
       currTime: 0,
       startTimer: true,
     }
+  });
+
+  const setIsAnswerable = (locked, answer, score) => dispatch({
+    type: SET_ANSWERABLE,
+    payload: {
+      locked,
+      answer,
+      score
+    }
+  });
+
+  const addScore = (score) => dispatch({
+    type: ADD_SCORE,
+    payload: score
   })
 
-  const { roomId, round } = useParams();
+  const round = state.gameState.round;
   const finalRound = parseInt(round) === 3;
   const baseScore = 200 * round;
-  let questionBoardContainer;
 
-  if (!finalRound) {
-    const questions = tempData.questions.slice(0, 6);
-
-    const parseQuestions = (questions, number, scoreMultiplier) => (
-      shuffle(questions).slice(0, number).map(({ question, answer }, idx) => (
-        <li className="card" key={`card-${idx}`}>
-          <QuestionCard
-            question={question}
-            answer={answer}
-            score={scoreMultiplier * baseScore + baseScore * idx}
-            startTimer={startTimer}
-          />
-        </li>
-      ))
-    );
-
-    const categoryContainer = questions.map(({ category, easy, medium, hard}, idx) => (
-      <ul className="category-container" key={`category-${idx}`}>
-        <li className="category-header">{category}</li>
-        {parseQuestions(easy, 2, 1)}
-        {parseQuestions(medium, 2, 3)}
-        {parseQuestions(hard, 1, 5)}
-      </ul>
-    ));
-
-    questionBoardContainer = (
-      <section className="question-board-container">
-        {categoryContainer}
-      </section>
-    )
-  } else {
-    questionBoardContainer = (
-      <section className="question-board-final">
-        FINAL ROUND
-      </section>
-    )
-  }
+  useEffect(() => {
+    if (!finalRound) {
+      const questions = tempData.questions.slice(0, 6);
+  
+      const parseQuestions = (questions, number, scoreMultiplier) => (
+        shuffle(questions).slice(0, number).map(({ question, answer }, idx) => (
+          <li className="card" key={`${round}-card-${idx}`}>
+            <QuestionCard
+              question={question}
+              answer={answer}
+              score={scoreMultiplier * baseScore + baseScore * idx}
+              startTimer={startTimer}
+              setIsAnswerable={setIsAnswerable}
+              state={state.gameState}
+              setDisplayQuestion={setDisplayQuestion}
+            />
+          </li>
+        ))
+      );
+  
+      const categoryContainer = questions.map(({ category, easy, medium, hard}, idx) => (
+        <ul className="category-container" key={`category-${idx}`}>
+          <li className="category-header">{category}</li>
+          {parseQuestions(easy, 2, 1)}
+          {parseQuestions(medium, 2, 3)}
+          {parseQuestions(hard, 1, 5)}
+        </ul>
+      ));
+  
+      setQuestionBoardComponent(
+        <section className="question-board-container">
+          {categoryContainer}
+        </section>
+      )
+    } else {
+      setQuestionBoardComponent(
+        <section className="question-board-final">
+          FINAL ROUND
+        </section>
+      )
+    }
+    // TODO: Grab all questions in Game component, this is causing
+    // refresh every display question update
+  }, [round, state.gameState.displayQuestion])
 
   return (
     <section className="game-round-container">
       <div className="top-bar">
         <div className="top">
           <div className="score">
-            Score
+            <h3>
+              Score: {state.score}
+            </h3>
           </div>
           <div className="round-display">
             Round {round}
           </div>
         </div>
         <div className="round-header">
-          Select a question
+          {state.gameState.displayQuestion.open ? 
+            "Get ready to answer..."
+            :
+            "Select a category"
+          }
         </div>
-        <Link className="dev" to={`/room/${roomId}/round/${parseInt(round) + 1}`}>
-          Next Round (Dev only)
-        </Link>
+        <button
+          className="dev"
+          onClick={() => setRound(state.gameState.round + 1)}
+        >
+          Next Round (Dev)
+        </button>
       </div>
 
       <div className="content">
-        {questionBoardContainer}
+        {questionBoardComponent}
       </div>
 
       <div className="bottom-bar">
-        <TimeRemaining resetTimer={resetTimer} timer={state.timer}/>
-        <AnswerButton />
+        <TimeRemaining
+          resetTimer={resetTimer}
+          timer={state.timer}
+          maxTime={5}
+          setIsAnswerable={setIsAnswerable}
+          setDisplayQuestion={setDisplayQuestion}
+          gameState={state.gameState}
+        />
+        <AnswerButton
+          state={state.gameState}
+          setIsAnswerable={setIsAnswerable}
+          addScore={addScore}
+          resetTimer={resetTimer}
+          setDisplayQuestion={setDisplayQuestion}
+        />
       </div>
     </section>
   )

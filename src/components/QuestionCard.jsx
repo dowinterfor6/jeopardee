@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import QuestionCardDisplay from './QuestionCardDisplay';
 
-const QuestionCard = ({ question, answer, score, startTimer}) => {
+const QuestionCard = ({
+  question,
+  answer,
+  score,
+  startTimer,
+  setIsAnswerable,
+  state,
+  setDisplayQuestion
+}) => {
   const [isFlipped, setIsFlipped] = useState(false);
+
+  const cardRef = useRef();
 
   let content;
 
@@ -20,19 +31,29 @@ const QuestionCard = ({ question, answer, score, startTimer}) => {
   }
 
   const handleCardClick = () => {
-    if (!isFlipped) {
+    if (!isFlipped && state.answerable.locked) {
       setIsFlipped(true);
-      startTimer(3);
+      setDisplayQuestion(true, false);
+      setIsAnswerable(false, answer, score);
+      startTimer(5);
     }
   }
 
   return (
-    <div
-      className={`question-card ${isFlipped ? 'flipped' : ''}`}
-      onClick={handleCardClick}
-    >
-      {content}
-    </div>
+    <>
+      <div
+        className={`question-card ${isFlipped ? 'flipped' : ''}`}
+        onClick={handleCardClick}
+        ref={cardRef}
+      >
+        {content}
+      </div>
+      <QuestionCardDisplay
+        content={content}
+        displayQuestion={state.displayQuestion}
+        isFlipped={isFlipped}
+      />
+    </>
   )
 }
 
