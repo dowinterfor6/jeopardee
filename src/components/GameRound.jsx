@@ -4,6 +4,8 @@ import { shuffle } from 'lodash';
 import QuestionCard from './QuestionCard';
 import TimeRemaining from './TimeRemaining';
 import AnswerButton from './AnswerButton';
+import FinalRound from './FinalRound';
+import Results from './Results';
 
 const GameRound = ({
   state,
@@ -48,12 +50,11 @@ const GameRound = ({
     payload: score
   })
 
-  const round = state.gameState.round;
-  const finalRound = parseInt(round) === 3;
+  const round = parseInt(state.gameState.round);
   const baseScore = 200 * round;
 
   useEffect(() => {
-    if (!finalRound) {
+    if (round === 1 || round === 2) {
       const questions = tempData.questions.slice(0, 6);
   
       const parseQuestions = (questions, number, scoreMultiplier) => (
@@ -67,6 +68,7 @@ const GameRound = ({
               setIsAnswerable={setIsAnswerable}
               state={state.gameState}
               setDisplayQuestion={setDisplayQuestion}
+              username={state.username}
             />
           </li>
         ))
@@ -86,16 +88,32 @@ const GameRound = ({
           {categoryContainer}
         </section>
       )
-    } else {
+    } else if (round === 3) {
+      // FinalRound
       setQuestionBoardComponent(
         <section className="question-board-final">
-          FINAL ROUND
+          <FinalRound
+            score={state.score}
+            startTimer={startTimer}
+            setIsAnswerable={setIsAnswerable}
+            setDisplayQuestion={setDisplayQuestion}
+            state={state}
+            username={state.username}
+            setRound={setRound}
+          />
+        </section>
+      )
+    } else {
+      // Handle edge cases as well as results
+      setQuestionBoardComponent(
+        <section className="question-board-results">
+          <Results username={state.username} score={state.score}/>
         </section>
       )
     }
     // TODO: Grab all questions in Game component, this is causing
     // refresh every display question update
-  }, [round, state.gameState.displayQuestion])
+  }, [round, state.gameState.displayQuestion, state.username])
 
   return (
     <section className="game-round-container">
@@ -111,6 +129,7 @@ const GameRound = ({
           </div>
         </div>
         <div className="round-header">
+          {/* TODO: Adjust this to be better lmao */}
           {state.gameState.displayQuestion.open ? 
             "Get ready to answer..."
             :

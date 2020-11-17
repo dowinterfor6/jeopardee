@@ -18,12 +18,12 @@ const AnswerButton = ({
       if (answer === state.answerable.answer) {
         // Add score
         addScore(state.answerable.score)
-        setDisplayQuestion(false, true);
+        setDisplayQuestion(false, true, answer);
         console.log("YAY: ", state.answerable.score);
       } else {
         // Minus score
         addScore(-1 * state.answerable.score)
-        setDisplayQuestion(false, false);
+        setDisplayQuestion(false, false, answer);
         console.log("wrong");
       }
       setAnswer("");

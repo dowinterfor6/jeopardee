@@ -24,7 +24,7 @@ const TimeRemaining = ({
       setIsAnswerable(true, "", 0);
       setIsActive(false);
       if (gameState.displayQuestion.open && !gameState.displayQuestion.correct) {
-        setDisplayQuestion(false, false);
+        setDisplayQuestion(false, false, '');
       }
       clearInterval(currInterval);
       resetTimer();

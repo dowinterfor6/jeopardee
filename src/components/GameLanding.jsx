@@ -1,24 +1,31 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 
-const GameLanding = ({ setRound }) => {
-  // TODO: Check valid name before navigating
-  // const { roomId } = useParams();
+const GameLanding = ({ setRound, setUsername }) => {
+  const [uname, setUname] = useState(''); 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setRound(1);
+    setUsername(uname);
+  }
 
   return (
     <section className="game-landing-container">
-      <label>
-        Enter a name!
-        <input type="text"/>
-      </label>
-      {/* <Link className="game-button" to={`/room/${roomId}/round/1`}> */}
-      <button
-        className="game-button"
-        onClick={() => setRound(1)}
-      >
-        Start the game!
-      </button>
-      {/* </Link> */}
+      <form onSubmit={handleSubmit}>
+        <label>
+          Enter a name!
+          <input
+            type="text"
+            required
+            value={uname}
+            onChange={({ currentTarget }) => setUname(currentTarget.value)}/>
+        </label>
+        <button
+          className="game-button"
+        >
+          Start the game!
+        </button>
+      </form>
     </section>
   )
 }

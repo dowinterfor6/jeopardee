@@ -1,8 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
-const QuestionCardDisplay = ({ content, displayQuestion, isFlipped }) => {
+const QuestionCardDisplay = ({
+  content,
+  displayQuestion,
+  isFlipped,
+  startTimer,
+  username
+}) => {
   const cardDisplayRef = useRef();
+  const [answer, setAnswer] = useState();
   
   useEffect(() => {
     if (isFlipped) {
@@ -17,6 +24,8 @@ const QuestionCardDisplay = ({ content, displayQuestion, isFlipped }) => {
         height,
         width,
         duration: 1
+      }).then(() => {
+        startTimer(5);
       })
     }
   }, [isFlipped]);
@@ -24,12 +33,16 @@ const QuestionCardDisplay = ({ content, displayQuestion, isFlipped }) => {
   // When card is about to be flipped back over
   useEffect(() => {
     if (!displayQuestion.open && isFlipped) {
-      // TODO: Display correct/incorrect answer, close after delay
-      // hardcoded
+      // Do not display correct answer if wrong
+      // TODO: Handle continued guessing for MP
+      setAnswer(displayQuestion.userAnswer);
+  
       gsap.to(cardDisplayRef.current, {
         opacity: 0,
         duration: 1
-      }).then(() => cardDisplayRef.current.style.display = "none");
+      }).delay(3).then(
+        () => cardDisplayRef.current.style.display = "none"
+      );
     };
   }, [displayQuestion.open, isFlipped])
 
@@ -42,7 +55,30 @@ const QuestionCardDisplay = ({ content, displayQuestion, isFlipped }) => {
       `}
       ref={cardDisplayRef}
     >
-      {content}
+      <div className="question-card-content">
+        {content}
+      </div>
+      <div
+        className={`
+        question-card-answer
+        ${
+          !displayQuestion.open && isFlipped && answer ?
+          'show'
+          :
+          ''
+        }
+        `}
+      >
+        <span className={`answer ${displayQuestion.correct ? 'correct' : 'wrong'}`}>
+          { answer }
+          <div className="correct-or-incorrect">
+            { displayQuestion.correct ? 'Correct!' : 'Incorrect!' }
+          </div>
+        </span>
+        <div className="user">
+          { username }
+        </div>
+      </div>
     </div>
   )
 }

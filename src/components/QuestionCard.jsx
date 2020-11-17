@@ -8,7 +8,8 @@ const QuestionCard = ({
   startTimer,
   setIsAnswerable,
   state,
-  setDisplayQuestion
+  setDisplayQuestion,
+  username
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -33,9 +34,9 @@ const QuestionCard = ({
   const handleCardClick = () => {
     if (!isFlipped && state.answerable.locked) {
       setIsFlipped(true);
-      setDisplayQuestion(true, false);
+      setDisplayQuestion(true, false, '');
       setIsAnswerable(false, answer, score);
-      startTimer(5);
+      // startTimer(5);
     }
   }
 
@@ -52,6 +53,8 @@ const QuestionCard = ({
         content={content}
         displayQuestion={state.displayQuestion}
         isFlipped={isFlipped}
+        startTimer={startTimer}
+        username={username}
       />
     </>
   )

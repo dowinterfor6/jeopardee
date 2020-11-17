@@ -9,6 +9,7 @@ const Game = () => {
   const ADD_SCORE = "ADDSCORE";
   const SET_ROUND = "SETROUND";
   const SET_DISPLAY_QUESTION = "SETDISPLAYQUESTION";
+  const SET_USERNAME = "SETUSERNAME";
   // TODO: For later, maybe not needed
   // const RESET_SCORE = "RESETSCORE";
 
@@ -41,12 +42,17 @@ const Game = () => {
       case SET_DISPLAY_QUESTION:
         nextState.gameState.displayQuestion = action.payload;
         return nextState;
+      case SET_USERNAME:
+        nextState.username = action.payload;
+        return nextState;
       default:
         return nextState;
     }
   }
 
+  // TODO: Store game questions in state
   const initialState = {
+    username: '',
     score: 0,
     timer: {
       time: 0,
@@ -57,15 +63,19 @@ const Game = () => {
       answerable: {
         locked: true,
         answer: '',
-        score: 0
+        score: 0,
       },
       round: 0,
       displayQuestion: {
         open: false,
         correct: false,
+        userAnswer: '',
       }
     }
   }
+
+  // TODO: Differentiate game end from user answer and time running out
+  // Time running out shows correct answer
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -74,12 +84,18 @@ const Game = () => {
     payload: round,
   });
 
-  const setDisplayQuestion = (open, correct) => dispatch({
+  const setDisplayQuestion = (open, correct, userAnswer) => dispatch({
     type: SET_DISPLAY_QUESTION,
     payload: {
       open,
-      correct
+      correct, 
+      userAnswer
     },
+  });
+
+  const setUsername = (username) => dispatch({
+    type: SET_USERNAME,
+    payload: username,
   });
 
   return (
@@ -87,6 +103,7 @@ const Game = () => {
       {state.gameState.round === 0 ?
         <GameLanding
           setRound={setRound}
+          setUsername={setUsername}
         />
         :
         <GameRound
