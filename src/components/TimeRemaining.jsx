@@ -54,7 +54,7 @@ const TimeRemaining = ({
   
   return (
     <div className="time-remaining-container">
-      TIME LEFT {currTime}
+      { isActive ? `Time Remaining: ${currTime}`: ''}
       {timerBar}
     </div>
   )

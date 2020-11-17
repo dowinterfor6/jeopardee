@@ -119,22 +119,26 @@ const GameRound = ({
     <section className="game-round-container">
       <div className="top-bar">
         <div className="top">
-          <div className="score">
-            <h3>
-              Score: {state.score}
-            </h3>
+          <div className="round-header">
+            {/* TODO: Adjust this to be better lmao */}
+            {state.gameState.displayQuestion.open ? 
+              "Get ready to answer..."
+              :
+              "Select a category"
+            }
           </div>
-          <div className="round-display">
-            Round {round}
+          <div className="round-info">
+            <div className="score">
+              <h3>
+                Score: ${state.score}
+              </h3>
+            </div>
+            <div className="round-display">
+              <h3>
+                Round {round}
+              </h3>
+            </div>
           </div>
-        </div>
-        <div className="round-header">
-          {/* TODO: Adjust this to be better lmao */}
-          {state.gameState.displayQuestion.open ? 
-            "Get ready to answer..."
-            :
-            "Select a category"
-          }
         </div>
         <button
           className="dev"

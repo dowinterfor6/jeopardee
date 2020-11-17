@@ -13,7 +13,7 @@ const GameLanding = ({ setRound, setUsername }) => {
     <section className="game-landing-container">
       <form onSubmit={handleSubmit}>
         <label>
-          Enter a name!
+          Display Name
           <input
             type="text"
             required

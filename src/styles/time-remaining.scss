@@ -1,6 +1,9 @@
 .time-remaining-container {
   width: 100%;
   margin-right: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
   .timer-container {
     width: 100%;
@@ -13,7 +16,7 @@
       border: 1px solid black;
 
       &.active {
-        background: rgb(255, 145, 145);
+        background: rgb(255, 174, 174);
       }
     }
   }

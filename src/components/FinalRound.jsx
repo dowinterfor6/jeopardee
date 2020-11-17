@@ -85,7 +85,7 @@ const FinalRound = ({
   return (
     <div className="final-round-container">
       <h4>Final Round!</h4>
-      <p>Wager up to your score for this final question about (up to ${maxWager}): </p>
+      <p>Wager up to your current score (up to ${maxWager}) for this final question about: </p>
       <h4>{ category }</h4>
       { content }
     </div>

@@ -1,3 +1,4 @@
+@import './global.scss';
 @import './app.scss';
 @import './game-round.scss';
 @import './question-card.scss';
@@ -5,6 +6,8 @@
 @import './answer-button.scss';
 @import './time-remaining.scss';
 @import './question-card-display.scss';
+@import './landing.scss';
+@import './game-landing.scss';
 
 * {
   box-sizing: border-box;

@@ -1,18 +1,45 @@
-.answer-button {
-  height: 50px;
-  width: 100px;
-  border-radius: 50px;
-  border: 1px solid black;
-  padding: 5px 10px;
-  transition: background-color 0.2s;
-  cursor: pointer;
+.answer-button-container {
+  form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 
-  &:hover {
-    background-color: rgb(236, 236, 236);
-  }
+    .input-container {
+      display: flex;
+      border: 1px solid black;
 
-  p {
-    margin: 0;
-    text-align: center;
+      input {
+        border: none;
+        padding: 5px;
+
+        &:focus {
+          outline: 0;
+          box-shadow: none;
+        }
+      }
+
+      .answer-button {
+        border: none;
+        padding: 5px 10px;
+        transition: background-color 0.2s;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: rgb(228, 228, 228);
+        }
+  
+        &:focus {
+          outline: 0;
+          box-shadow: none;
+        }
+        
+        &:active {
+          background-color: rgb(190, 190, 190);
+        }
+      }
+    }
+
   }
 }

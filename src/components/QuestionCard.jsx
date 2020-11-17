@@ -26,7 +26,7 @@ const QuestionCard = ({
   } else {
     content = (
       <div className="card-score detail">
-        {score}
+        ${score}
       </div>
     )
   }

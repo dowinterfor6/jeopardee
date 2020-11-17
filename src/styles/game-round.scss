@@ -8,21 +8,34 @@
     padding: 10px 20px;
 
     .top {
-      margin-bottom: 20px;
+      padding: 25px 0;
       width: 100%;
       display: flex;
       justify-content: space-between;
-    }
 
-    .round-header {
-      font-size: 52px;
-      font-weight: bold;
+      .round-header {
+        font-size: 52px;
+        font-weight: bold;
+      }
+
+      .round-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: right;
+        text-align: right;
+
+        h3 {
+          margin: 0;
+          font-size: 24px;
+        }
+      }
     }
 
     .dev {
       position: absolute;
-      right: 20px;
-      transform: translateY(-25px);
+      top: 0;
+      left: 0;
     }
   }
 
@@ -58,8 +71,10 @@
 
   .bottom-bar {
     // TODO: Same as top-bar
+    height: 75px;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
   }
 }

@@ -1,3 +1,5 @@
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 
 const AnswerButton = ({
@@ -35,13 +37,17 @@ const AnswerButton = ({
   return (
     <div className="answer-button-container">
       <form onSubmit={handleAnswerSubmit}>
-        <button type="submit" className="answer-button"></button>
-        <input
-          type="text"
-          placeholder="Answer..."
-          value={answer}
-          onChange={(e) => setAnswer(e.currentTarget.value)}
-        />
+        <div className="input-container">
+          <input
+            type="text"
+            placeholder="Answer..."
+            value={answer}
+            onChange={(e) => setAnswer(e.currentTarget.value)}
+          />
+          <button type="submit" className="answer-button">
+            <FontAwesomeIcon icon={faChevronRight} size="lg" />
+          </button>
+        </div>
       </form>
     </div>
   )
