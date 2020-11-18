@@ -35,16 +35,35 @@ const FinalRound = ({
     // TODO: does not display incorrect answer
     if (!state.gameState.displayQuestion.open && state.gameState.displayQuestion.userAnswer) {
       setUserAnswerComponent(
-        <div className="user-answer-container">
-          <div>{ state.username } said { state.gameState.displayQuestion.userAnswer }</div>
-          <div className="correct-or-not">
-            {state.gameState.displayQuestion.correct ? "Correct!" : "Incorrect!"}
+        <div
+          className={`
+          question-card-answer
+          ${
+            !state.gameState.displayQuestion.open && state.gameState.displayQuestion.userAnswer ?
+            'show'
+            :
+            ''
+          }
+          `}
+        >
+          <span className="answer">
+            { state.gameState.displayQuestion.userAnswer }
+          </span>
+          <div className="user">
+            - { state.username }
+          </div>
+          <div className={`
+            correct-or-incorrect
+            ${state.gameState.displayQuestion.correct ? 'correct' : 'wrong'}
+            `}>
+            { state.gameState.displayQuestion.correct ? 'Correct!' : 'Incorrect!' }
           </div>
         </div>
       )
-      setTimeout(() => {
-        setRound(4);
-      }, 3000);
+      // TODO: Also when fail to answer
+      // setTimeout(() => {
+      //   setRound(4);
+      // }, 3000);
     }
   }, [state])
 
@@ -76,7 +95,7 @@ const FinalRound = ({
           max={maxWager}
           onChange={({currentTarget}) => setWager(currentTarget.value)}
         />
-        <button>
+        <button className="button">
           Set Wager
         </button>
       </form>
@@ -84,10 +103,14 @@ const FinalRound = ({
 
   return (
     <div className="final-round-container">
-      <h4>Final Round!</h4>
-      <p>Wager up to your current score (up to ${maxWager}) for this final question about: </p>
-      <h4>{ category }</h4>
-      { content }
+      <div className="final-round-wrapper">
+        <div className={`first-part ${questionActive ? '' : 'show'}`}>
+          <h4>Final Round!</h4>
+          <p>Wager up to ${maxWager} {score >= 0 ? '(in debt)' : ''} for this final question about: </p>
+        </div>
+        <h4>{ category }</h4>
+        { content }
+      </div>
     </div>
   )
 }

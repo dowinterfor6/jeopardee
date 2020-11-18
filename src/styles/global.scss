@@ -1,3 +1,6 @@
+$blue: #000c96;
+$yellow: #c88949;
+
 @mixin button($width, $height) {
   cursor: pointer;
   border: 1px solid black;
@@ -26,6 +29,44 @@
     background: rgb(116, 116, 116);
     color: white;
     border-color: rgb(116, 116, 116);
+  }
+}
+
+@mixin questionCardStyle {
+  .question-card-answer {
+    width: 100%;
+    display: none;
+
+    &.show {
+      display: initial;
+    }
+
+    .answer {
+      border-radius: 5px;
+      transition: border 1s;
+      // TODO: Doesn't work
+      transition-delay: 2s;
+      font-size: 48px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    
+    .user {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .correct-or-incorrect {
+      font-size: 36px;
+
+      &.correct {
+        color: rgb(0, 209, 0);
+      }
+
+      &.wrong {
+        color: rgb(255, 72, 72);
+      }
+    }
   }
 }
 

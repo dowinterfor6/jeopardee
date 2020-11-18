@@ -85,7 +85,9 @@ const GameRound = ({
   
       setQuestionBoardComponent(
         <section className="question-board-container">
-          {categoryContainer}
+          <div className="content-wrapper">
+            {categoryContainer}
+          </div>
         </section>
       )
     } else if (round === 3) {

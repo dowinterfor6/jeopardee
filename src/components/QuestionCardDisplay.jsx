@@ -13,14 +13,15 @@ const QuestionCardDisplay = ({
   
   useEffect(() => {
     if (isFlipped) {
-      const contentComponent = document.querySelector(".question-board-container");
-      const { top } = contentComponent.getBoundingClientRect();
-      const { height, width, margin } = getComputedStyle(contentComponent);
+      const contentComponent = document.querySelector(".content-wrapper");
+      const { top, left } = contentComponent.getBoundingClientRect();
+      const { height, width } = getComputedStyle(contentComponent);
       // TODO: idk why it's off by one grid
       // TODO: easing formula seems to not be working
+      // probably due to css transitions or something
       gsap.to(cardDisplayRef.current, {
         top: `${top + 75}px`,
-        left: margin,
+        left: left,
         height,
         width,
         duration: 1
@@ -69,14 +70,17 @@ const QuestionCardDisplay = ({
         }
         `}
       >
-        <span className={`answer ${displayQuestion.correct ? 'correct' : 'wrong'}`}>
+        <span className="answer">
           { answer }
-          <div className="correct-or-incorrect">
-            { displayQuestion.correct ? 'Correct!' : 'Incorrect!' }
-          </div>
         </span>
         <div className="user">
-          { username }
+          - { username }
+        </div>
+        <div className={`
+          correct-or-incorrect
+          ${displayQuestion.correct ? 'correct' : 'wrong'}
+          `}>
+          { displayQuestion.correct ? 'Correct!' : 'Incorrect!' }
         </div>
       </div>
     </div>

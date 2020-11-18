@@ -38,6 +38,12 @@ const Game = () => {
         return nextState;
       case SET_ROUND:
         nextState.gameState.round = action.payload;
+        // TODO: Fix answer persisting
+        nextState.displayQuestion = {
+          open: false,
+          correct: false,
+          userAnswer: '',
+        }
         return nextState;
       case SET_DISPLAY_QUESTION:
         nextState.gameState.displayQuestion = action.payload;

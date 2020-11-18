@@ -5,11 +5,12 @@
   height: 100%;
 
   .top-bar {
-    padding: 10px 20px;
+    padding: 0 20px;
 
     .top {
-      padding: 25px 0;
-      width: 100%;
+      padding: 10px 0;
+      margin: auto;
+      width: 80%;
       display: flex;
       justify-content: space-between;
 
@@ -42,28 +43,47 @@
   .content {
     .question-board-container {
       margin: 20px;
-      display: grid;
-      // TODO: make this more robust
-      grid-template-columns: repeat(6, 150px);
-      grid-gap: 10px;
+      display: flex;
       justify-content: center;
-  
-      .category-container {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        text-align: center;
+
+      .content-wrapper {
+        padding: 25px;
+        background: black;
+        width: fit-content;
         display: grid;
+        // TODO: make this more robust
+        grid-template-columns: repeat(6, 150px);
         grid-gap: 10px;
-        
-        .card {
-          height: 75px;
-          width: 150px;
-        }
-        
-        .category-header {
-          font-weight: bold;
-          font-size: 28px;
+        justify-content: center;
+
+        .category-container {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          text-align: center;
+          display: grid;
+          grid-gap: 10px;
+          
+          .card, .category-header {
+            height: 75px;
+            width: 150px;
+            background: $blue;
+          }
+
+          .card {
+            color: $yellow;
+          }
+          
+          .category-header {
+            font-weight: bold;
+            // TODO: Temp fix for long words
+            font-size: 24px;
+            word-wrap: break-word;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+          }
         }
       }
     }
@@ -71,10 +91,11 @@
 
   .bottom-bar {
     // TODO: Same as top-bar
-    height: 75px;
-    padding: 10px 20px;
+    height: 50px;
+    width: 80%;
+    margin: 0 auto 20px auto;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
   }
 }

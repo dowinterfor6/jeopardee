@@ -18,9 +18,10 @@ const QuestionCard = ({
   let content;
 
   if (isFlipped) {
+    // TODO: Handle question too long
     content = (
       <div className="card-question detail">
-        Q: {question}
+        {question}
       </div>
     )
   } else {

@@ -11,13 +11,14 @@ const AnswerButton = ({
 }) => {
   const [answer, setAnswer] = useState("");
 
-  // TODO: Alt method, press button, then type answer
-
-  // To handle both button press or enter
   const handleAnswerSubmit = (e) => {
     e.preventDefault();
     if (!state.answerable.locked) {
-      if (answer === state.answerable.answer) {
+      // TODO: Temp solution
+      const isAnswerEquivalent = 
+        answer.toLowerCase().split(' ').join('') === state.answerable.answer.toLowerCase().split(' ').join('');
+
+      if (isAnswerEquivalent) {
         // Add score
         addScore(state.answerable.score)
         setDisplayQuestion(false, true, answer);

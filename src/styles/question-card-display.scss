@@ -5,36 +5,60 @@
   transform: translateY(-75px);
   display: none;
   cursor: auto;
+  background: $blue;
+  color: $yellow;
   
   &.flipped {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .question-card-content {
-    border: 1px solid orange;
-  }
+    margin-bottom: 40px;
 
-  .question-card-answer {
-    border: 1px solid blue;
-    display: none;
-
-    &.show {
-      display: initial;
-    }
-
-    .answer {
-      border-radius: 5px;
-      transition: border 1s;
-      // TODO: Doesn't work
-      transition-delay: 2s;
-
-      &.correct {
-        border: 5px solid green;
-      }
-
-      &.wrong {
-        border: 5px solid red;
-      }
+    .card-question.detail {
+      color: white;
+      font-size: 72px;
     }
   }
+
+  @include questionCardStyle;
+
+  // .question-card-answer {
+  //   width: 100%;
+  //   display: none;
+
+  //   &.show {
+  //     display: initial;
+  //   }
+
+  //   .answer {
+  //     border-radius: 5px;
+  //     transition: border 1s;
+  //     // TODO: Doesn't work
+  //     transition-delay: 2s;
+  //     font-size: 48px;
+  //     margin-bottom: 10px;
+  //     width: 100%;
+  //   }
+    
+  //   .user {
+  //     font-size: 28px;
+  //     margin-bottom: 20px;
+  //   }
+
+  //   .correct-or-incorrect {
+  //     font-size: 36px;
+
+  //     &.correct {
+  //       color: rgb(0, 209, 0);
+  //     }
+
+  //     &.wrong {
+  //       color: rgb(255, 72, 72);
+  //     }
+  //   }
+  // }
 }
