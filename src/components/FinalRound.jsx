@@ -61,9 +61,9 @@ const FinalRound = ({
         </div>
       )
       // TODO: Also when fail to answer
-      // setTimeout(() => {
-      //   setRound(4);
-      // }, 3000);
+      setTimeout(() => {
+        setRound(4);
+      }, 3000);
     }
   }, [state])
 
