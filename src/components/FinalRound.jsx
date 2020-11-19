@@ -8,11 +8,8 @@ const FinalRound = ({
   state,
   setRound
 }) => {
-  // TODO: Let's everyone do the last round
-  // TODO: temp
-  const category = "Youtube";
-  const question = "What year was youtube founded?";
-  const answer = "2005";
+  const category = state.gameQuestions.finalRound.category;
+  const { question, answer } = state.gameQuestions.finalRound.hard[0];
 
   const [wager, setWager] = useState(0);
   const [questionActive, setQuestionActive] = useState(false);
@@ -28,22 +25,20 @@ const FinalRound = ({
     // TODO: Delay?
     setDisplayQuestion(true, false, '');
     setIsAnswerable(false, answer, parseInt(wager));
-    startTimer(5);
+    startTimer(7);
   }
 
   useEffect(() => {
     // TODO: does not display incorrect answer
-    if (!state.gameState.displayQuestion.open && state.gameState.displayQuestion.userAnswer) {
+    if (
+      (!state.gameState.displayQuestion.open && state.gameState.displayQuestion.userAnswer) ||
+      (!state.gameState.displayQuestion.open && state.timer.time === 0)
+    ) {
       setUserAnswerComponent(
         <div
           className={`
-          question-card-answer
-          ${
-            !state.gameState.displayQuestion.open && state.gameState.displayQuestion.userAnswer ?
-            'show'
-            :
-            ''
-          }
+            question-card-answer
+            show
           `}
         >
           <span className="answer">

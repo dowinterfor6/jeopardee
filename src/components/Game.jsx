@@ -1,6 +1,7 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import GameLanding from './GameLanding';
 import GameRound from './GameRound';
+import { getGameQuestions } from '../utils';
 
 const Game = () => {
   const RESET_TIMER = "RESETTIMER";
@@ -10,8 +11,7 @@ const Game = () => {
   const SET_ROUND = "SETROUND";
   const SET_DISPLAY_QUESTION = "SETDISPLAYQUESTION";
   const SET_USERNAME = "SETUSERNAME";
-  // TODO: For later, maybe not needed
-  // const RESET_SCORE = "RESETSCORE";
+  const SET_GAME_QUESTIONS = "SETGAMEQUESTIONS";
 
   const reducer = (state, action) => {
     Object.freeze(state);
@@ -31,7 +31,11 @@ const Game = () => {
         nextState.timer.currTime = nextState.timer.time;
         return nextState;
       case SET_ANSWERABLE:
-        nextState.gameState.answerable = action.payload;
+        nextState.gameState.answerable.locked = action.payload.locked;
+        nextState.gameState.answerable.score = action.payload.score;
+        if (action.payload.answer.length > 0) {
+          nextState.gameState.answerable.answer = action.payload.answer;
+        }
         return nextState;
       case ADD_SCORE:
         nextState.score = nextState.score + action.payload;
@@ -51,12 +55,14 @@ const Game = () => {
       case SET_USERNAME:
         nextState.username = action.payload;
         return nextState;
+      case SET_GAME_QUESTIONS:
+        nextState.gameQuestions = action.payload;
+        return nextState;
       default:
         return nextState;
     }
   }
 
-  // TODO: Store game questions in state
   const initialState = {
     username: '',
     score: 0,
@@ -77,11 +83,9 @@ const Game = () => {
         correct: false,
         userAnswer: '',
       }
-    }
+    },
+    gameQuestions: []
   }
-
-  // TODO: Differentiate game end from user answer and time running out
-  // Time running out shows correct answer
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -103,6 +107,15 @@ const Game = () => {
     type: SET_USERNAME,
     payload: username,
   });
+
+  const setGameQuestions = (gameQuestions) => dispatch({
+    type: SET_GAME_QUESTIONS,
+    payload: gameQuestions
+  })
+
+  useEffect(() => {
+    setGameQuestions(getGameQuestions());
+  }, []);
 
   return (
     <section className="game-container">

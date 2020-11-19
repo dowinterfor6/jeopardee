@@ -9,16 +9,18 @@ const QuestionCard = ({
   setIsAnswerable,
   state,
   setDisplayQuestion,
-  username
+  username,
+  dailyDouble
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const cardRef = useRef();
 
+  const actualScore = dailyDouble ? score * 2 : score;
+
   let content;
 
   if (isFlipped) {
-    // TODO: Handle question too long
     content = (
       <div className="card-question detail">
         {question}
@@ -32,12 +34,14 @@ const QuestionCard = ({
     )
   }
 
-  const handleCardClick = () => {
+  const handleCardClick = (e) => {
+    e.stopPropagation();
+
     if (!isFlipped && state.answerable.locked) {
       setIsFlipped(true);
       setDisplayQuestion(true, false, '');
-      setIsAnswerable(false, answer, score);
-      // startTimer(5);
+      setIsAnswerable(false, answer, actualScore);
+      document.getElementById("userTextInput").focus();
     }
   }
 
@@ -53,9 +57,11 @@ const QuestionCard = ({
       <QuestionCardDisplay
         content={content}
         displayQuestion={state.displayQuestion}
+        questionAnswer={state.answerable.answer}
         isFlipped={isFlipped}
         startTimer={startTimer}
         username={username}
+        dailyDouble={dailyDouble}
       />
     </>
   )

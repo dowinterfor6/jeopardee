@@ -16,6 +16,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    // TODO: Temp solution for overflow
+    font-size: 0.6rem;
   }
 
   .card-score {

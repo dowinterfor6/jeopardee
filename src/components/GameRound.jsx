@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import tempData from '../temp-backend';
-import { shuffle } from 'lodash';
+// import tempData from '../temp-backend';
+// import { shuffle } from 'lodash';
 import QuestionCard from './QuestionCard';
 import TimeRemaining from './TimeRemaining';
 import AnswerButton from './AnswerButton';
@@ -17,15 +17,18 @@ const GameRound = ({
   setRound,
   setDisplayQuestion
 }) => {
+
   const [questionBoardComponent, setQuestionBoardComponent] = useState();
 
   // TODO: Track used questions to not repeat for round 2
   // or just integrate it part of api
 
   // TODO: Round 4 = results, and offer option to reset to round 0
-  const resetTimer = () => dispatch({
-    type: RESET_TIMER
-  });
+  const resetTimer = () => {
+    dispatch({
+      type: RESET_TIMER
+    });
+  };
 
   const startTimer = (time) => dispatch({
     type: START_TIMER,
@@ -49,16 +52,20 @@ const GameRound = ({
     type: ADD_SCORE,
     payload: score
   })
-
+  
   const round = parseInt(state.gameState.round);
   const baseScore = 200 * round;
-
+  
+  useEffect(() => {
+    setDisplayQuestion(true, false, '');
+  }, [round]);
+  
   useEffect(() => {
     if (round === 1 || round === 2) {
-      const questions = tempData.questions.slice(0, 6);
-  
-      const parseQuestions = (questions, number, scoreMultiplier) => (
-        shuffle(questions).slice(0, number).map(({ question, answer }, idx) => (
+      const questions = state.gameQuestions[`round${round}`];
+
+      const parseQuestions = (questions, scoreMultiplier) => (
+        questions.map(({ question, answer, dailyDouble }, idx) => (
           <li className="card" key={`${round}-card-${idx}`}>
             <QuestionCard
               question={question}
@@ -69,17 +76,20 @@ const GameRound = ({
               state={state.gameState}
               setDisplayQuestion={setDisplayQuestion}
               username={state.username}
+              setRound={setRound}
+              dailyDouble={dailyDouble}
             />
           </li>
-        ))
+          )
+        )
       );
   
       const categoryContainer = questions.map(({ category, easy, medium, hard}, idx) => (
         <ul className="category-container" key={`category-${idx}`}>
           <li className="category-header">{category}</li>
-          {parseQuestions(easy, 2, 1)}
-          {parseQuestions(medium, 2, 3)}
-          {parseQuestions(hard, 1, 5)}
+          {parseQuestions(easy, 1, 1)}
+          {parseQuestions(medium, 3, 1)}
+          {parseQuestions(hard, 5, 1)}
         </ul>
       ));
   
@@ -115,18 +125,18 @@ const GameRound = ({
     }
     // TODO: Grab all questions in Game component, this is causing
     // refresh every display question update
-  }, [round, state.gameState.displayQuestion, state.username])
+  }, [round, state.gameState.displayQuestion, state.username, state.gameState.answerable.answer, state.gameState.cardsFlipped])
 
   return (
     <section className="game-round-container">
       <div className="top-bar">
-        <div className="top">
+        <div className={`top ${round !== 1 && round !== 2 ? 'hide' : ''}`}>
           <div className="round-header">
             {/* TODO: Adjust this to be better lmao */}
             {state.gameState.displayQuestion.open ? 
               "Get ready to answer..."
               :
-              "Select a category"
+              "Select a tile"
             }
           </div>
           <div className="round-info">
@@ -143,10 +153,10 @@ const GameRound = ({
           </div>
         </div>
         <button
-          className="dev"
+          className={`dev ${round >= 3 ? 'hide' : ''}`}
           onClick={() => setRound(state.gameState.round + 1)}
         >
-          Next Round (Dev)
+          Next Round
         </button>
       </div>
 
@@ -158,7 +168,7 @@ const GameRound = ({
         <TimeRemaining
           resetTimer={resetTimer}
           timer={state.timer}
-          maxTime={5}
+          maxTime={7}
           setIsAnswerable={setIsAnswerable}
           setDisplayQuestion={setDisplayQuestion}
           gameState={state.gameState}

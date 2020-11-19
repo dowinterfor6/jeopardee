@@ -40,6 +40,7 @@
     }
 
     form {
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -50,7 +51,7 @@
         height: 50px;
         padding: 10px;
         font-size: 24px;
-        text-align: center;
+        text-align: left;
 
         &:focus {
           outline: none;
@@ -74,9 +75,10 @@
 
       .question-container {
         margin-bottom: 20px;
+        font-size: 42px;
         
         div {
-          font-size: 36px;
+          font-size: 32px;
           margin: 5px 0;
         }
       }

@@ -7,7 +7,7 @@ const AnswerButton = ({
   setIsAnswerable,
   addScore,
   resetTimer,
-  setDisplayQuestion
+  setDisplayQuestion,
 }) => {
   const [answer, setAnswer] = useState("");
 
@@ -22,12 +22,10 @@ const AnswerButton = ({
         // Add score
         addScore(state.answerable.score)
         setDisplayQuestion(false, true, answer);
-        console.log("YAY: ", state.answerable.score);
       } else {
         // Minus score
         addScore(-1 * state.answerable.score)
         setDisplayQuestion(false, false, answer);
-        console.log("wrong");
       }
       setAnswer("");
       setIsAnswerable(true, "", 0);
@@ -40,10 +38,12 @@ const AnswerButton = ({
       <form onSubmit={handleAnswerSubmit}>
         <div className="input-container">
           <input
+            id="userTextInput"
             type="text"
             placeholder="Answer..."
             value={answer}
             onChange={(e) => setAnswer(e.currentTarget.value)}
+            required
           />
           <button type="submit" className="answer-button">
             <FontAwesomeIcon icon={faChevronRight} size="lg" />

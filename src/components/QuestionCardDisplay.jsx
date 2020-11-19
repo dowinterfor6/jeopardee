@@ -6,9 +6,13 @@ const QuestionCardDisplay = ({
   displayQuestion,
   isFlipped,
   startTimer,
-  username
+  username,
+  questionAnswer,
+  dailyDouble
 }) => {
   const cardDisplayRef = useRef();
+  const questionCardContentRef = useRef();
+  const dailyDoubleRef = useRef();
   const [answer, setAnswer] = useState();
   
   useEffect(() => {
@@ -16,6 +20,9 @@ const QuestionCardDisplay = ({
       const contentComponent = document.querySelector(".content-wrapper");
       const { top, left } = contentComponent.getBoundingClientRect();
       const { height, width } = getComputedStyle(contentComponent);
+
+      // const detailComponent = document.querySelector(".question-card-content .card-question.detail");
+      const detailComponent = questionCardContentRef.current.childNodes[0];
       // TODO: idk why it's off by one grid
       // TODO: easing formula seems to not be working
       // probably due to css transitions or something
@@ -24,28 +31,58 @@ const QuestionCardDisplay = ({
         left: left,
         height,
         width,
-        duration: 1
+        duration: 1,
+        padding: 20,
       }).then(() => {
-        startTimer(5);
+        startTimer(7);
       })
+
+      gsap.to(detailComponent, {
+        ['font-size']: 56,
+        duration: 1
+      }).delay(1);
+
+      if (dailyDouble) {
+        gsap.to(dailyDoubleRef.current, {
+          ['font-size']: 36,
+          duration: 1
+        }).delay(1);
+      }
     }
   }, [isFlipped]);
 
   // When card is about to be flipped back over
   useEffect(() => {
     if (!displayQuestion.open && isFlipped) {
-      // Do not display correct answer if wrong
       // TODO: Handle continued guessing for MP
       setAnswer(displayQuestion.userAnswer);
   
       gsap.to(cardDisplayRef.current, {
         opacity: 0,
-        duration: 1
-      }).delay(3).then(
-        () => cardDisplayRef.current.style.display = "none"
+        duration: 1,
+        display: "none"
+      }).delay(0).then(
+        () => {
+          cardDisplayRef.current.style.display = "none";
+        }
       );
     };
-  }, [displayQuestion.open, isFlipped])
+  }, [displayQuestion.open, isFlipped]);
+
+  // TODO: User has to guess for correct answer to show up
+  const correctAnswerDisplay = () => {
+    const correctIncorrect = displayQuestion.correct ? "Correct" : "Incorrect";
+    return `${correctIncorrect}, the answer was ${questionAnswer}!`
+  }
+
+  let dailyDoubleComponent;
+  if (dailyDouble) {
+    dailyDoubleComponent = (
+      <div className="daily-double" ref={dailyDoubleRef}>
+        Daily Double!
+      </div>
+    )
+  }
 
   return (
     <div
@@ -56,7 +93,8 @@ const QuestionCardDisplay = ({
       `}
       ref={cardDisplayRef}
     >
-      <div className="question-card-content">
+      {dailyDoubleComponent}
+      <div className="question-card-content" ref={questionCardContentRef}>
         {content}
       </div>
       <div
@@ -80,7 +118,7 @@ const QuestionCardDisplay = ({
           correct-or-incorrect
           ${displayQuestion.correct ? 'correct' : 'wrong'}
           `}>
-          { displayQuestion.correct ? 'Correct!' : 'Incorrect!' }
+          {correctAnswerDisplay()}
         </div>
       </div>
     </div>

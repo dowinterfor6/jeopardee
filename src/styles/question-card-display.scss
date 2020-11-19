@@ -7,6 +7,10 @@
   cursor: auto;
   background: $blue;
   color: $yellow;
+
+  .daily-double {
+    font-size: 0;
+  }
   
   &.flipped {
     display: flex;
@@ -16,11 +20,10 @@
   }
 
   .question-card-content {
-    margin-bottom: 40px;
-
     .card-question.detail {
+      overflow: hidden;
       color: white;
-      font-size: 72px;
+      font-size: 0.6rem;
     }
   }
 
