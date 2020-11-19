@@ -25,7 +25,7 @@ const FinalRound = ({
     // TODO: Delay?
     setDisplayQuestion(true, false, '');
     setIsAnswerable(false, answer, parseInt(wager));
-    startTimer(7);
+    startTimer(10);
   }
 
   useEffect(() => {

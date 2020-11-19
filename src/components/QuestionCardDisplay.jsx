@@ -34,7 +34,7 @@ const QuestionCardDisplay = ({
         duration: 1,
         padding: 20,
       }).then(() => {
-        startTimer(7);
+        startTimer(10);
       })
 
       gsap.to(detailComponent, {
@@ -61,7 +61,7 @@ const QuestionCardDisplay = ({
         opacity: 0,
         duration: 1,
         display: "none"
-      }).delay(0).then(
+      }).delay(3).then(
         () => {
           cardDisplayRef.current.style.display = "none";
         }

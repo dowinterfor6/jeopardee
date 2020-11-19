@@ -168,7 +168,7 @@ const GameRound = ({
         <TimeRemaining
           resetTimer={resetTimer}
           timer={state.timer}
-          maxTime={7}
+          maxTime={10}
           setIsAnswerable={setIsAnswerable}
           setDisplayQuestion={setDisplayQuestion}
           gameState={state.gameState}
