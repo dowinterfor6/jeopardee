@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/jeopardee/static/css/main.25c343a7.chunk.css",
-    "main.js": "/jeopardee/static/js/main.b21d9c4c.chunk.js",
-    "main.js.map": "/jeopardee/static/js/main.b21d9c4c.chunk.js.map",
+    "main.css": "/jeopardee/static/css/main.4833fcca.chunk.css",
+    "main.js": "/jeopardee/static/js/main.fc74f236.chunk.js",
+    "main.js.map": "/jeopardee/static/js/main.fc74f236.chunk.js.map",
     "runtime-main.js": "/jeopardee/static/js/runtime-main.eb99863b.js",
     "runtime-main.js.map": "/jeopardee/static/js/runtime-main.eb99863b.js.map",
-    "static/js/2.73f15f56.chunk.js": "/jeopardee/static/js/2.73f15f56.chunk.js",
-    "static/js/2.73f15f56.chunk.js.map": "/jeopardee/static/js/2.73f15f56.chunk.js.map",
+    "static/js/2.16ba460d.chunk.js": "/jeopardee/static/js/2.16ba460d.chunk.js",
+    "static/js/2.16ba460d.chunk.js.map": "/jeopardee/static/js/2.16ba460d.chunk.js.map",
     "index.html": "/jeopardee/index.html",
-    "static/css/main.25c343a7.chunk.css.map": "/jeopardee/static/css/main.25c343a7.chunk.css.map",
-    "static/js/2.73f15f56.chunk.js.LICENSE.txt": "/jeopardee/static/js/2.73f15f56.chunk.js.LICENSE.txt"
+    "static/css/main.4833fcca.chunk.css.map": "/jeopardee/static/css/main.4833fcca.chunk.css.map",
+    "static/js/2.16ba460d.chunk.js.LICENSE.txt": "/jeopardee/static/js/2.16ba460d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.eb99863b.js",
-    "static/js/2.73f15f56.chunk.js",
-    "static/css/main.25c343a7.chunk.css",
-    "static/js/main.b21d9c4c.chunk.js"
+    "static/js/2.16ba460d.chunk.js",
+    "static/css/main.4833fcca.chunk.css",
+    "static/js/main.fc74f236.chunk.js"
   ]
 }
