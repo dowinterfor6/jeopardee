@@ -133,7 +133,7 @@ const GameRound = ({
         <div className={`top ${round !== 1 && round !== 2 ? 'hide' : ''}`}>
           <div className="round-header">
             {/* TODO: Adjust this to be better lmao */}
-            {state.gameState.displayQuestion.open ? 
+            {!state.gameState.answerable.locked ? 
               "Get ready to answer..."
               :
               "Select a tile"
